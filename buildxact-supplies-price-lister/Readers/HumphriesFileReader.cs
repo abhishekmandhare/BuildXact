@@ -34,7 +34,6 @@ namespace buildxact_supplies.Readers
                     .ToListAsync();
             }
             return result;
-
         }
 
         public SuppliesData Convert(HumphriesData data)

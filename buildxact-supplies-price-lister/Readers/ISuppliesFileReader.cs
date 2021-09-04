@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace buildxact_supplies.Readers
@@ -11,9 +9,8 @@ namespace buildxact_supplies.Readers
         public string Description { get; set; }
         public decimal Price { get; set; }
     }
-    interface ISuppliesFileReader
+    public interface ISuppliesFileReader
     {
-
         Task<IEnumerable<SuppliesData>> GetSuppliesDataAsync(string filePath);
     }
 }

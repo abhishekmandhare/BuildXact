@@ -1,4 +1,5 @@
-﻿using System;
+﻿using buildxact_supplies.CurrencyConverter;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -29,6 +30,12 @@ namespace buildxact_supplies.Readers
 
     public class MegaCorpFileReader : ISuppliesFileReader
     {
+        private readonly ICurrencyConverter _currencyConverter;
+
+        public MegaCorpFileReader(ICurrencyConverter currencyConverter)
+        {
+            this._currencyConverter = currencyConverter;
+        }
 
         public async Task<IEnumerable<SuppliesData>> GetSuppliesDataAsync(string filePath)
         {
@@ -42,9 +49,9 @@ namespace buildxact_supplies.Readers
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 };
                 var MegaCorpData = JsonSerializer.Deserialize<MegacorpData>(jsonText, options);
-                foreach(var partnerItem in MegaCorpData.Partners)
+                foreach (var partnerItem in MegaCorpData.Partners)
                 {
-                    foreach(var supplies in partnerItem.Supplies)
+                    foreach (var supplies in partnerItem.Supplies)
                     {
                         result.Add(Convert(supplies));
                     }
@@ -60,7 +67,7 @@ namespace buildxact_supplies.Readers
             {
                 Description = data.Description,
                 Id = data.Id.ToString(),
-                Price = data.PriceInCents
+                Price = _currencyConverter.Convert(data.PriceInCents / (decimal)100)
             };
         }
     }

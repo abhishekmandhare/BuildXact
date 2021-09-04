@@ -2,6 +2,8 @@
 using NUnit.Framework;
 using System;
 using System.Linq;
+using FakeItEasy;
+using buildxact_supplies.CurrencyConverter;
 
 namespace SuppliesPriceListerTest
 {
@@ -25,12 +27,15 @@ namespace SuppliesPriceListerTest
             Assert.AreEqual(output.Price, output.Price);
         }
 
+
         [Test]
         public void TestGetSuppliesDataMegaCorp()
         {
             // ARRANGE
-            var reader = new MegaCorpFileReader();
-            
+            var currencyConverterMock = A.Fake<ICurrencyConverter>();
+            A.CallTo(() => currencyConverterMock.Convert(A<decimal>.Ignored)).Returns(100);
+            var reader = new MegaCorpFileReader(currencyConverterMock);
+
             // ACT
             var output = reader.GetSuppliesDataAsync("TestMegaCorp.json").Result.ToList();
 
@@ -39,12 +44,12 @@ namespace SuppliesPriceListerTest
             var o1 = output[0];
             Assert.AreEqual("1", o1.Id);
             Assert.AreEqual("100 x 200 x 20mpa Internal Beam", o1.Description);
-            Assert.AreEqual(4000, o1.Price);
+            Assert.AreEqual(100, o1.Price);
 
             var o2 = output[1];
             Assert.AreEqual("0", o2.Id);
             Assert.AreEqual("100 x 350 Thickened Edge", o2.Description);
-            Assert.AreEqual(3500, o2.Price);
+            Assert.AreEqual(100, o2.Price);
         }
 
         [Test]
