@@ -1,0 +1,26 @@
+{
+  "partners": [
+    {
+      "name": "Megacorp Southeast",
+      "partnerType": "INTERNAL",
+      "partnerAddress": "14 Park Crescent, Clayton",
+      "supplies": [
+        {
+          "id": 1,
+          "description": "100 x 200 x 20mpa Internal Beam",
+          "uom": "lm",
+          "priceInCents": 4000,
+          "providerId": "907d853f-dbe7-45c0-8e59-9dff4044cf80",
+          "materialType": "Steel"
+        },
+        {
+          "id": 0,
+          "description": "100 x 350 Thickened Edge",
+          "uom": "lm",
+          "priceInCents": 3500,
+          "providerId": "b77b9733-8cb4-436f-9e2c-b61ad1b3a42f",
+          "materialType": "Steel"
+        }
+      ]    }
+  ]
+}
